@@ -1,0 +1,23 @@
+# pull official base image
+FROM node:19.5.0-alpine
+
+WORKDIR /root/frontend
+
+# # add `/node_modules/.bin` to $PATH
+# ENV PATH /root/frontend/node_modules/.bin:$PATH
+
+
+# Install package
+COPY ./frontend/package*.json ./
+
+RUN npm install --verbose
+# RUN npm install react-scripts@5.0.1 -g --silent
+
+# add app
+COPY ./frontend ./
+
+RUN npm run build
+
+EXPOSE 8888
+
+CMD [ "npm", "start" ]
